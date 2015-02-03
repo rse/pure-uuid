@@ -168,6 +168,26 @@ interface UUID {
 }
 ```
 
+Examples
+--------
+
+```js
+//  load a UUID
+uuid = new UUID("0a300ee9-f9e4-5697-a51a-efc7fafaba67");
+
+//  make a UUID version 1 (time and node based)
+uuid = new UUID(1);
+
+//  make a UUID version 3 (name-based, MD5)
+uuid = new UUID(3, "ns:URL", "http://example.com/");
+
+//  make a UUID version 4 (random number based)
+uuid = new UUID(4);
+
+//  make a UUID version 5 (name-based, MD5)
+uuid = new UUID(5, "ns:URL", "http://example.com/");
+```
+
 License
 -------
 
