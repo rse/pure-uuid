@@ -2,7 +2,7 @@
     "name":        "pure-uuid",
     "homepage":    "http://github.com/rse/pure-uuid",
     "description": "Pure JavaScript Based Universally Unique Identifier (UUID)",
-    "version":     "0.9.0",
+    "version":     "0.9.1",
     "license":     "MIT",
     "author": {
         "name":    "Ralf S. Engelschall",
