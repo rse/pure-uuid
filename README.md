@@ -13,10 +13,10 @@ Pure-UUID
 Abstract
 --------
 
-This is a pure JavaScript implementation for the generation of DCE
-1.1, ISO/IEC 11578:1996 and IETF RFC-4122 compliant Universally Unique
-Identifier (UUID). It supports DCE 1.1 variant UUIDs of version 1
-(time and node based), version 3 (name based, MD5), version 4 (random
+This is a pure JavaScript and dependency-free library for the generation
+of DCE 1.1, ISO/IEC 11578:1996 and IETF RFC-4122 compliant Universally
+Unique Identifier (UUID). It supports DCE 1.1 variant UUIDs of version
+1 (time and node based), version 3 (name based, MD5), version 4 (random
 number based) and version 5 (name based, SHA-1). It can be used in both
 [Node.js](http://nodejs.org/) based server and browser based client
 environments.
@@ -32,13 +32,61 @@ You can conveniently get Pure-UUID in various ways:
 - Bower: install as client component via the Bower component manager:<br/>
   `$ bower install pure-uuid`
 
+- NPM: install as server component via the NPM package manager:<br/>
+  `$ npm install pure-uuid`
+
 - cURL: downloading only the main file from the repository:<br/>
   `$ curl -O https://raw.github.com/rse/pure-uuid/master/uuid.js`
+
+Using Pure-UUID
+---------------
+
+- global environment:
+
+```js
+var uuid = new UUID(3, "ns:URL", "http://example.com/");
+```
+
+- CommonJS environment:
+
+```js
+var UUID = require("pure-uuid");
+var uuid = new UUID(3, "ns:URL", "http://example.com/");
+```
+
+- AMD environment:
+
+```js
+define([ "pure-uuid" ], function (UUID) {
+    var uuid = new UUID(3, "ns:URL", "http://example.com/");
+});
+```
 
 API
 ---
 
-FIXME
+```ts
+interface UUID {
+    /*  default construction  */
+    (): UUID;
+
+    /*  parsing construction  */
+    (uuid: String): UUID;
+
+    /*  making construction  */
+    (version: Number): UUID;
+    (version: Number, ns: String, data: String): UUID;
+
+    /*  making  */
+    make(version: Number, ...params: any[]): UUID;
+
+    /*  parsing  */
+    parse(string: String): UUID;
+
+    /*  formatting  */
+    format(): String;
+}
+```
 
 License
 -------

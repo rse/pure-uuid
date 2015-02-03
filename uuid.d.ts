@@ -23,9 +23,23 @@
 */
 
 interface UUID {
-    (version?: Number): UUID;
+    /*  default construction  */
+    (): UUID;
+
+    /*  parsing construction  */
+    (uuid: String): UUID;
+
+    /*  making construction  */
+    (version: Number): UUID;
+    (version: Number, ns: String, data: String): UUID;
+
+    /*  making  */
     make(version: Number, ...params: any[]): UUID;
+
+    /*  parsing  */
     parse(string: String): UUID;
+
+    /*  formatting  */
     format(): String;
 }
 
