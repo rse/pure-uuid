@@ -137,7 +137,7 @@ var uuid = new UUID(3, "ns:URL", "http://example.com/");
 - AMD environment:
 
 ```js
-define([ "pure-uuid" ], function (UUID) {
+define(["pure-uuid"], function (UUID) {
     var uuid = new UUID(3, "ns:URL", "http://example.com/");
 });
 ```
