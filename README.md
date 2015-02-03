@@ -31,6 +31,76 @@ as possible in the particular environment. Third, thanks to a Universal
 Module Definition (UMD) wrapper, this library works out-of-the-box in
 all important JavaScript run-time environments.
 
+What is a UUID?
+---------------
+
+UUIDs are 128 bit numbers which are intended to have a high likelihood
+of uniqueness over space and time and are computationally difficult to
+guess. They are globally unique identifiers which can be locally
+generated without contacting a global registration authority. UUIDs are
+intended as unique identifiers for both mass tagging objects with an
+extremely short lifetime and to reliably identifying very persistent
+objects across a network.
+
+### UUID Binary Representation
+
+According to the DCE 1.1, ISO/IEC 11578:1996 and IETF RFC-4122
+standards, a DCE 1.1 variant UUID is a 128 bit number defined out of 7
+fields, each field a multiple of an octet in size and stored in network
+byte order:
+
+```txt
+                                                    [4]
+                                                   version
+                                                 -->|  |<--
+                                                    |  |
+                                                    |  |  [16]
+                [32]                      [16]      |  |time_hi
+              time_low                  time_mid    | _and_version
+    |<---------------------------->||<------------>||<------------>|
+    | MSB                          ||              ||  |           |
+    | /                            ||              ||  |           |
+    |/                             ||              ||  |           |
+
+    +------++------++------++------++------++------++------++------+~~
+    |  15  ||  14  ||  13  ||  12  ||  11  ||  10  |####9  ||   8  |
+    | MSO  ||      ||      ||      ||      ||      |####   ||      |
+    +------++------++------++------++------++------++------++------+~~
+    7654321076543210765432107654321076543210765432107654321076543210
+
+  ~~+------++------++------++------++------++------++------++------+
+    ##* 7  ||   6  ||   5  ||   4  ||   3  ||   2  ||   1  ||   0  |
+    ##*    ||      ||      ||      ||      ||      ||      ||  LSO |
+  ~~+------++------++------++------++------++------++------++------+
+    7654321076543210765432107654321076543210765432107654321076543210
+
+    | |    ||      ||                                             /|
+    | |    ||      ||                                            / |
+    | |    ||      ||                                          LSB |
+    |<---->||<---->||<-------------------------------------------->|
+    |clk_seq clk_seq                      node
+    |_hi_res _low                         [48]
+    |[5-6]    [8]
+    | |
+ -->| |<--
+  variant
+   [2-3]
+```
+
+An example of a UUID binary representation is the octet stream 0xF8
+0x1D 0x4F 0xAE 0x7D 0xEC 0x11 0xD0 0xA7 0x65 0x00 0xA0 0xC9 0x1E 0x6B
+0xF6. The binary representation format is exactly what the OSSP uuid
+API functions uuid_import() and uuid_export() deal with under
+UUID_FMT_BIN.
+
+### UUID ASCII String Representation
+
+According to the DCE 1.1, ISO/IEC 11578:1996 and IETF RFC-4122
+standards, a DCE 1.1 variant UUID is represented as an ASCII string
+consisting of 8 hexadecimal digits followed by a hyphen, then three
+groups of 4 hexadecimal digits each followed by a hyphen, then 12
+hexadecimal digits.
+
 Getting Pure-UUID
 -----------------
 
