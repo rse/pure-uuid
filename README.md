@@ -21,6 +21,16 @@ number based) and version 5 (name based, SHA-1). It can be used in both
 [Node.js](http://nodejs.org/) based server and browser based client
 environments.
 
+The essential points of this implementation (in contrast to the many
+others) are: First, although internally 32/64 bit unsigned integer
+arithmentic and MD5/SHA-1 digest algorithmic is required, this UUID
+implementation is fully self-contained and dependency-free. Second,
+this implementation wraps around either `Uint8Array`, `Buffer` or
+`Array` standard classes and this way tries to represent UUIDs as best
+as possible in the particular environment. Third, thanks to a Universal
+Module Definition (UMD) wrapper, this library works out-of-the-box in
+all important JavaScript run-time environments.
+
 Getting Pure-UUID
 -----------------
 
