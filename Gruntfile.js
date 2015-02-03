@@ -1,5 +1,5 @@
 /*
-**  Pure-UUID -- Pure JavaScript Based Universally Unique Identifiers (UUID)
+**  Pure-UUID -- Pure JavaScript Based Universally Unique Identifier (UUID)
 **  Copyright (c) 2004-2015 Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
