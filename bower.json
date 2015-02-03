@@ -1,0 +1,21 @@
+{
+    "name":        "pure-uuid",
+    "version":     "0.9.0",
+    "homepage":    "http://github.com/rse/pure-uuid",
+    "description": "Pure JavaScript Based Universally Unique Identifiers (UUID)",
+    "main":        "uuid.min.js",
+    "license":     "MIT",
+    "authors": [
+        "Ralf S. Engelschall <rse@engelschall.com>"
+    ],
+    "keywords": [
+        "uuid", "identifier"
+    ],
+    "dependencies": {
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components"
+    ]
+}
