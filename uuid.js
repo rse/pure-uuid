@@ -39,8 +39,6 @@
 
     /*  utility function: minimal Pseudo Random Number Generator (PRNG)  */
     var prng = function (len, radix) {
-        if (typeof radix === "undefined")
-            radix = 256;
         var bytes = [];
         for (var i = 0; i < len; i++)
             bytes[i] = Math.floor(Math.random() * radix + 1);
@@ -49,35 +47,23 @@
 
     /*  array to hex-string conversion  */
     var a2hs = function (bytes, begin, end, uppercase, str, pos) {
-        var mkNum = function (num, min, uppercase) {
-            var base16 = "";
-            if (typeof min === "undefined")
-                min = 0;
-            if (typeof uppercase === "undefined")
-                uppercase = false;
-            var charset = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
-            while (num > 0 || min > 0) {
-                base16 = charset.charAt(Math.floor(num % 16)) + base16;
-                num = Math.floor(num / 16);
-                if (min > 0)
-                    min--;
-            }
+        var mkNum = function (num, uppercase) {
+            var base16 = num.toString(16);
+            if (base16.length < 2)
+                base16 = "0" + base16;
+            if (uppercase)
+                base16 = base16.toUpperCase();
             return base16;
         };
         for (var i = begin; i <= end; i++)
-            str[pos++] = mkNum(bytes[i], 2, uppercase);
+            str[pos++] = mkNum(bytes[i], uppercase);
         return str;
     };
 
     /*  hex-string to array conversion  */
     var hs2a = function (str, begin, end, bytes, pos) {
-        str = str.toLowerCase();
-        var map = "0123456789abcdef";
-        for (var i = begin; i <= end; i += 2) {
-            bytes[pos++] = (
-                  (map.indexOf(str.charAt(i  )) << 4)
-                | (map.indexOf(str.charAt(i+1))     ) );
-        }
+        for (var i = begin; i <= end; i += 2)
+            bytes[pos++] = parseInt(str.substr(i, 2), 16);
     };
 
     /*  This library provides conversions between 8/16/32-bit character
