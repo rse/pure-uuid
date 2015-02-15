@@ -515,7 +515,10 @@
         else if (version === 3 || version === 5) {
             /*  generate UUID version 3/5 (MD5/SHA-1 based)  */
             var input = "";
-            var nsUUID = new UUID().parse(arguments[1]);
+            var nsUUID = (
+                typeof arguments[1] === "object" && arguments[1] instanceof UUID ?
+                arguments[1] : new UUID().parse(arguments[1])
+            );
             for (i = 0; i < 16; i++)
                  input += String.fromCharCode(nsUUID[i]);
             input += arguments[2];
