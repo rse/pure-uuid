@@ -27,6 +27,8 @@
 /* global describe: true */
 /* global it: true */
 /* global expect: true */
+/* jshint -W030: false */
+/* eslint no-unused-expressions: 0 */
 
 global.chai = require("chai");
 global.expect = global.chai.expect;
@@ -52,9 +54,9 @@ describe("UUID base functionality", function () {
         expect(new UUID().parse("7da78284-2f14-5e7f-95e1-baaa9027c26f").format()).to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
     });
     it("should be able to make various UUID versions", function () {
-        expect(new UUID(1).format()).to.be.not.empty();
+        expect(new UUID(1).format()).to.be.not.empty;
         expect(new UUID(3, "ns:URL", "foo").format()).to.be.equal("a5bf60bd-fe2d-3fac-bbd7-404751e6ca66");
-        expect(new UUID(4).format()).to.be.not.empty();
+        expect(new UUID(4).format()).to.be.not.empty;
         expect(new UUID(5, "ns:URL", "foo").format()).to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
     });
 });
