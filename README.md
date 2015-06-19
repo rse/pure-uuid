@@ -114,7 +114,7 @@ You can conveniently get Pure-UUID in various ways:
   `$ npm install pure-uuid`
 
 - cURL: downloading only the main file from the repository:<br/>
-  `$ curl -O https://raw.github.com/rse/pure-uuid/master/uuid.js`
+  `$ curl -O https://raw.githubusercontent.com/rse/pure-uuid/master/uuid.js`
 
 Using Pure-UUID
 ---------------
