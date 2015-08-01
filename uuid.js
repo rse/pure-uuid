@@ -85,7 +85,7 @@
         var w;
         var wk = 0;
         var sl = s.length;
-        while (true) {
+        for (;;) {
             /*  fetch next octet from string  */
             if (ck === 0)
                 C = s.charCodeAt(i++);
