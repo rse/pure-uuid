@@ -443,7 +443,7 @@
         best UUID representation in the particular environment  */
     /* global Uint8Array: false */
     /* global Buffer: false */
-    if (typeof UInt8Array !== "undefined")
+    if (typeof Uint8Array !== "undefined")
         /*  HTML5 TypedArray (browser environments: IE10, FF, CH, SF, OP)
             (http://caniuse.com/#feat=typedarrays)  */
         UUID.prototype = new Uint8Array(16);
