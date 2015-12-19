@@ -1,6 +1,6 @@
 {
     "name":        "pure-uuid",
-    "version":     "1.0.7",
+    "version":     "1.0.8",
     "homepage":    "http://github.com/rse/pure-uuid",
     "description": "Pure JavaScript Based Universally Unique Identifier (UUID)",
     "main":        "uuid.min.js",
