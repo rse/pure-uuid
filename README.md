@@ -182,7 +182,7 @@ uuid = new UUID(3, "ns:URL", "http://example.com/");
 //  make a UUID version 4 (random number based)
 uuid = new UUID(4);
 
-//  make a UUID version 5 (name-based, MD5)
+//  make a UUID version 5 (name-based, SHA-1)
 uuid = new UUID(5, "ns:URL", "http://example.com/");
 ```
 
