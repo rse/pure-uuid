@@ -41,5 +41,11 @@ interface UUID {
 
     /*  formatting  */
     format(): String;
+
+    /*  importing  */
+    import(arr: Number[]): UUID;
+
+    /*  exporting  */
+    export(): Number[];
 }
 

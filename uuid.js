@@ -574,6 +574,35 @@
         return this;
     };
 
+    /*  API method: export UUID into standard array of numbers  */
+    UUID.prototype.export = function () {
+        var arr = Array(16);
+        for (var i = 0; i < 16; i++)
+            arr[i] = this[i];
+        return arr;
+    };
+
+    /*  API method: import UUID from standard array of numbers  */
+    UUID.prototype.import = function (arr) {
+        if (!(typeof arr === "object" && arr instanceof Array))
+            throw new Error("UUID: import: invalid argument (type Array expected)");
+        if (arr.length !== 16)
+            throw new Error("UUID: import: invalid argument (Array of length 16 expected)");
+        for (var i = 0; i < 16; i++) {
+            if (typeof arr[i] !== "number")
+                throw new Error("UUID: import: invalid array element #" + i +
+                    " (type Number expected)");
+            if (!(isFinite(arr[i]) && Math.floor(arr[i]) === arr[i]))
+                throw new Error("UUID: import: invalid array element #" + i +
+                    " (Number with integer value expected)");
+            if (!(arr[i] >= 0 && arr[i] <= 255))
+                throw new Error("UUID: import: invalid array element #" + i +
+                    " (Number with integer value in range 0...255 expected)");
+            this[i] = arr[i];
+        }
+        return this;
+    };
+
     /*  export API  */
     return UUID;
 }));
