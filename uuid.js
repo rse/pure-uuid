@@ -204,7 +204,7 @@
     var ui64_ror = function (x, s) {
         var ov = ui64_zero();
         if ((s % UI64_DIGIT_BITS) !== 0)
-            throw new Error("ui64_rol: only bit rotations supported with a multiple of digit bits");
+            throw new Error("ui64_ror: only bit rotations supported with a multiple of digit bits");
         var k = Math.floor(s / UI64_DIGIT_BITS);
         for (var i = 0; i < k; i++) {
             for (var j = UI64_DIGITS - 1 - 1; j >= 0; j--)
