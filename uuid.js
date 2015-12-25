@@ -433,7 +433,7 @@
         else if (arguments.length >= 1 && typeof arguments[0] === "number")
             this.make.apply(this, arguments);
         else if (arguments.length >= 1)
-            throw new Error("invalid arguments");
+            throw new Error("UUID: constructor: invalid arguments");
         else
             for (var i = 0; i < 16; i++)
                 this[i] = 0x00;
@@ -527,7 +527,7 @@
                  uuid[i] = s.charCodeAt(i);
         }
         else
-            throw new Error("uuid: invalid version");
+            throw new Error("UUID: make: invalid version");
 
         /*  brand with particular UUID version  */
         uuid[6] &= 0x0F;
