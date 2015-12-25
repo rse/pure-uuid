@@ -45,19 +45,34 @@ describe("UUID base functionality", function () {
         expect(uuid).to.respondTo("format");
     });
     it("should parse and format standard UUIDs", function () {
-        expect(new UUID().format()).to.be.equal("00000000-0000-0000-0000-000000000000");
-        expect(new UUID().parse("nil").format()).to.be.equal("00000000-0000-0000-0000-000000000000");
-        expect(new UUID().parse("ns:DNS").format()).to.be.equal("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
-        expect(new UUID().parse("ns:OID").format()).to.be.equal("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
-        expect(new UUID().parse("ns:X500").format()).to.be.equal("6ba7b814-9dad-11d1-80b4-00c04fd430c8");
-        expect(new UUID("7da78284-2f14-5e7f-95e1-baaa9027c26f").format()).to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
-        expect(new UUID().parse("7da78284-2f14-5e7f-95e1-baaa9027c26f").format()).to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
+        expect(new UUID().format())
+            .to.be.equal("00000000-0000-0000-0000-000000000000");
+        expect(new UUID().parse("nil").format())
+            .to.be.equal("00000000-0000-0000-0000-000000000000");
+        expect(new UUID().parse("ns:DNS").format())
+            .to.be.equal("6ba7b810-9dad-11d1-80b4-00c04fd430c8");
+        expect(new UUID().parse("ns:OID").format())
+            .to.be.equal("6ba7b812-9dad-11d1-80b4-00c04fd430c8");
+        expect(new UUID().parse("ns:X500").format())
+            .to.be.equal("6ba7b814-9dad-11d1-80b4-00c04fd430c8");
+        expect(new UUID("7da78284-2f14-5e7f-95e1-baaa9027c26f").format())
+            .to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
+        expect(new UUID().parse("7da78284-2f14-5e7f-95e1-baaa9027c26f").format())
+            .to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
+        expect(new UUID().parse("7da78284-2f14-5e7f-95e1-baaa9027c26f").export())
+            .to.be.deep.equal([0x7d,0xa7,0x82,0x84,0x2f,0x14,0x5e,0x7f,0x95,0xe1,0xba,0xaa,0x90,0x27,0xc2,0x6f]);
+        expect(new UUID().import([0x7d,0xa7,0x82,0x84,0x2f,0x14,0x5e,0x7f,0x95,0xe1,0xba,0xaa,0x90,0x27,0xc2,0x6f]).format())
+            .to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
     });
     it("should be able to make various UUID versions", function () {
-        expect(new UUID(1).format()).to.be.not.empty;
-        expect(new UUID(3, "ns:URL", "foo").format()).to.be.equal("a5bf60bd-fe2d-3fac-bbd7-404751e6ca66");
-        expect(new UUID(4).format()).to.be.not.empty;
-        expect(new UUID(5, "ns:URL", "foo").format()).to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
+        expect(new UUID(1).format())
+            .to.be.not.empty;
+        expect(new UUID(3, "ns:URL", "foo").format())
+            .to.be.equal("a5bf60bd-fe2d-3fac-bbd7-404751e6ca66");
+        expect(new UUID(4).format())
+            .to.be.not.empty;
+        expect(new UUID(5, "ns:URL", "foo").format())
+            .to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
         expect(new UUID(5, new UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8"), "foo").format())
             .to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
     });
