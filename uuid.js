@@ -23,19 +23,19 @@
 */
 
 /*  Universal Module Definition (UMD)  */
-(function (root, name, factory) {
+(function (root, factory) {
     /* global define: false */
     /* global module: false */
     if (typeof define === "function" && typeof define.amd !== "undefined")
         /*  AMD environment  */
-        define(name, function () { return factory(root); });
+        define(function () { return factory(root); });
     else if (typeof module === "object" && typeof module.exports === "object")
         /*  CommonJS environment  */
         module.exports = factory(root);
     else
         /*  Browser environment  */
-        root[name] = factory(root);
-}(this, "UUID", function (/* root */) {
+        root.UUID = factory(root);
+}(this, function (/* root */) {
 
     /*  utility function: minimal Pseudo Random Number Generator (PRNG)  */
     var prng = function (len, radix) {
