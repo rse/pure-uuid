@@ -159,7 +159,7 @@ interface UUID {
     make(version: Number, ...params: any[]): UUID;
 
     /*  parsing  */
-    parse(string: String): UUID;
+    parse(str: String): UUID;
 
     /*  formatting  */
     format(): String;
@@ -169,6 +169,9 @@ interface UUID {
 
     /*  exporting  */
     export(): Number[];
+
+    /*  byte-wise comparison  */
+    compare(other: UUID): boolean;
 }
 ```
 

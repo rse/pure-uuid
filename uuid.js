@@ -603,6 +603,21 @@
         return this;
     };
 
+    /*  API method: compare UUID against another one  */
+    UUID.prototype.compare = function (other) {
+        if (typeof other !== "object")
+            throw new Error("UUID: compare: invalid argument (type UUID expected)");
+        if (!(other instanceof UUID))
+            throw new Error("UUID: compare: invalid argument (type UUID expected)");
+        for (var i = 0; i < 16; i++) {
+            if (this[i] < other[i])
+                return -1;
+            else if (this[i] > other[i])
+                return +1;
+        }
+        return 0;
+    };
+
     /*  export API  */
     return UUID;
 }));
