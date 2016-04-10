@@ -66,6 +66,71 @@
             bytes[pos++] = parseInt(str.substr(i, 2), 16);
     };
 
+    /*  This library provides Z85: ZeroMQ's Base-85 encoding/decoding
+        (see http://rfc.zeromq.org/spec:32 for details)  */
+
+    var z85_encoder = (
+        "0123456789" +
+         "abcdefghijklmnopqrstuvwxyz" +
+         "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+         ".-:+=^!/*?&<>()[]{}@%$#"
+    ).split("");
+    var z85_decoder = [
+        0x00, 0x44, 0x00, 0x54, 0x53, 0x52, 0x48, 0x00,
+        0x4B, 0x4C, 0x46, 0x41, 0x00, 0x3F, 0x3E, 0x45,
+        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+        0x08, 0x09, 0x40, 0x00, 0x49, 0x42, 0x4A, 0x47,
+        0x51, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A,
+        0x2B, 0x2C, 0x2D, 0x2E, 0x2F, 0x30, 0x31, 0x32,
+        0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A,
+        0x3B, 0x3C, 0x3D, 0x4D, 0x00, 0x4E, 0x43, 0x00,
+        0x00, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10,
+        0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18,
+        0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20,
+        0x21, 0x22, 0x23, 0x4F, 0x00, 0x50, 0x00, 0x00
+    ];
+    var z85_encode = function (data, size) {
+        if ((size % 4) !== 0)
+            throw new Error("z85_encode: invalid input length (multiple of 4 expected)");
+        var str = "", i = 0, value = 0;
+        while (i < size) {
+            value = (value * 256) + data[i++];
+            if ((i % 4) === 0) {
+                var divisor = 85 * 85 * 85 * 85;
+                while (divisor >= 1) {
+                    var idx = Math.floor(value / divisor) % 85;
+                    str += z85_encoder[idx];
+                    divisor /= 85;
+                }
+                value = 0;
+             }
+        }
+        return str;
+    };
+    var z85_decode = function (str, dest) {
+        var l = str.length;
+        if ((l % 5) !== 0)
+            throw new Error("z85_decode: invalid input length (multiple of 5 expected)");
+        if (typeof dest === "undefined")
+            dest = new Array(l * 4 / 5);
+        var i = 0, j = 0, value = 0;
+        while (i < l) {
+            var idx = str.charCodeAt(i++) - 32;
+            if (idx < 0 || idx >= z85_decoder.length)
+                break;
+            value = (value * 85) + z85_decoder[idx];
+            if ((i % 5) === 0) {
+                var divisor = 256 * 256 * 256;
+                while (divisor >= 1) {
+                    dest[j++] = Math.trunc((value / divisor) % 256);
+                    divisor /= 256;
+                }
+                value = 0;
+            }
+        }
+        return dest;
+    };
+
     /*  This library provides conversions between 8/16/32-bit character
         strings and 8/16/32-bit big/little-endian word arrays.  */
 
@@ -541,36 +606,49 @@
     };
 
     /*  API method: format UUID into usual textual representation  */
-    UUID.prototype.format = function () {
-        var str = Array(32);
-        a2hs(this,  0,  3, false, str,  0);
-        str[ 8] = "-";
-        a2hs(this,  4,  5, false, str,  9);
-        str[13] = "-";
-        a2hs(this,  6,  7, false, str, 14);
-        str[18] = "-";
-        a2hs(this,  8,  9, false, str, 19);
-        str[23] = "-";
-        a2hs(this, 10, 15, false, str, 24);
-        return str.join("");
+    UUID.prototype.format = function (type) {
+        var str, arr;
+        if (type === "z85")
+            str = z85_encode(this, 16);
+        else if (type === "b16") {
+            arr = Array(32);
+            a2hs(this, 0, 15, true, arr, 0);
+            str = arr.join("");
+        }
+        else if (type === undefined || type === "std") {
+            arr = new Array(36);
+            a2hs(this,  0,  3, false, arr,  0); arr[ 8] = "-";
+            a2hs(this,  4,  5, false, arr,  9); arr[13] = "-";
+            a2hs(this,  6,  7, false, arr, 14); arr[18] = "-";
+            a2hs(this,  8,  9, false, arr, 19); arr[23] = "-";
+            a2hs(this, 10, 15, false, arr, 24);
+            str = arr.join("");
+        }
+        return str;
     };
 
     /*  API method: parse UUID from usual textual representation  */
-    UUID.prototype.parse = function (str) {
-        var map = {
-            "nil":     "00000000-0000-0000-0000-000000000000",
-            "ns:DNS":  "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
-            "ns:URL":  "6ba7b811-9dad-11d1-80b4-00c04fd430c8",
-            "ns:OID":  "6ba7b812-9dad-11d1-80b4-00c04fd430c8",
-            "ns:X500": "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
-        };
-        if (map[str] !== undefined)
-            str = map[str];
-        hs2a(str,  0,  7, this,  0);
-        hs2a(str,  9, 12, this,  4);
-        hs2a(str, 14, 17, this,  6);
-        hs2a(str, 19, 22, this,  8);
-        hs2a(str, 24, 35, this, 10);
+    UUID.prototype.parse = function (str, type) {
+        if (type === "z85")
+            z85_decode(str, this);
+        else if (type === "b16")
+            hs2a(str, 0, 35, this, 0);
+        else if (type === undefined || type === "std") {
+            var map = {
+                "nil":     "00000000-0000-0000-0000-000000000000",
+                "ns:DNS":  "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+                "ns:URL":  "6ba7b811-9dad-11d1-80b4-00c04fd430c8",
+                "ns:OID":  "6ba7b812-9dad-11d1-80b4-00c04fd430c8",
+                "ns:X500": "6ba7b814-9dad-11d1-80b4-00c04fd430c8"
+            };
+            if (map[str] !== undefined)
+                str = map[str];
+            hs2a(str,  0,  7, this,  0);
+            hs2a(str,  9, 12, this,  4);
+            hs2a(str, 14, 17, this,  6);
+            hs2a(str, 19, 22, this,  8);
+            hs2a(str, 24, 35, this, 10);
+        }
         return this;
     };
 

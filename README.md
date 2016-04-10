@@ -159,10 +159,10 @@ interface UUID {
     make(version: Number, ...params: any[]): UUID;
 
     /*  parsing  */
-    parse(str: String): UUID;
+    parse(str: String, type?: String): UUID;
 
     /*  formatting  */
-    format(): String;
+    format(type?: String): String;
 
     /*  importing  */
     import(arr: Number[]): UUID;
