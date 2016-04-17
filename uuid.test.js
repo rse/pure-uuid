@@ -84,5 +84,23 @@ describe("UUID base functionality", function () {
         expect(new UUID(5, new UUID("6ba7b811-9dad-11d1-80b4-00c04fd430c8"), "foo").format())
             .to.be.equal("7da78284-2f14-5e7f-95e1-baaa9027c26f");
     });
+    it("should be able to fold UUIDs", function () {
+        expect(new UUID("nil").fold(4))
+            .to.be.deep.equal([ 0x00 ]);
+        expect(new UUID("nil").fold(3))
+            .to.be.deep.equal([ 0x00, 0x00 ]);
+        expect(new UUID("nil").fold(2))
+            .to.be.deep.equal([ 0x00, 0x00, 0x00, 0x00 ]);
+        expect(new UUID("nil").fold(1))
+            .to.be.deep.equal([ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ]);
+        expect(new UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8").fold(4))
+            .to.be.deep.equal([ 0x03 ]);
+        expect(new UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8").fold(3))
+            .to.be.deep.equal([ 0xa0, 0xa3 ]);
+        expect(new UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8").fold(2))
+            .to.be.deep.equal([ 0x39, 0x6a, 0x99, 0xc9 ]);
+        expect(new UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8").fold(1))
+            .to.be.deep.equal([ 0xeb, 0x13, 0xb8, 0xd0, 0xd2, 0x79, 0x21, 0x19 ]);
+    });
 });
 

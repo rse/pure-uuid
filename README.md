@@ -172,6 +172,9 @@ interface UUID {
 
     /*  byte-wise comparison  */
     compare(other: UUID): boolean;
+
+    /*  folding k-times  */
+    fold(k: number): Array[];
 }
 ```
 

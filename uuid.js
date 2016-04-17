@@ -696,6 +696,23 @@
         return 0;
     };
 
+    /*  API method: hash UUID by XOR-folding it k times  */
+    UUID.prototype.fold = function (k) {
+        if (typeof k === "undefined")
+            throw new Error("UUID: fold: invalid argument (number of fold operations expected)");
+        if (k < 1 || k > 4)
+            throw new Error("UUID: fold: invalid argument (1-4 fold operations expected)");
+        var n = 16 / Math.pow(2, k);
+        var hash = new Array(n);
+        for (var i = 0; i < n; i++) {
+            var h = 0;
+            for (var j = 0; i + j < 16; j += n)
+                h ^= this[i + j];
+            hash[i] = h;
+        }
+        return hash;
+    };
+
     /*  export API  */
     return UUID;
 }));
