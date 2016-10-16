@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         },
         eslint: {
             options: {
-                config: "eslint.json"
+                configFile: "eslint.json"
             },
             target: [ "uuid.js", "uuid.test.js" ],
         },
