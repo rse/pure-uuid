@@ -102,5 +102,11 @@ describe("UUID base functionality", function () {
         expect(new UUID("6ba7b810-9dad-11d1-80b4-00c04fd430c8").fold(1))
             .to.be.deep.equal([ 0xeb, 0x13, 0xb8, 0xd0, 0xd2, 0x79, 0x21, 0x19 ]);
     });
+    it("should be able to detect errors", function () {
+        expect(function () { new UUID().parse("00000000-0000-0000-0000-000000000000"); })
+            .to.not.throw(Error);
+        expect(function () { new UUID().parse("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"); })
+            .to.throw(Error);
+    });
 });
 
