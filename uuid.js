@@ -629,6 +629,8 @@
 
     /*  API method: parse UUID from usual textual representation  */
     UUID.prototype.parse = function (str, type) {
+        if (typeof str !== "string")
+            throw new Error("UUID: parse: invalid argument (type string expected)");
         if (type === "z85")
             z85_decode(str, this);
         else if (type === "b16")
@@ -643,6 +645,9 @@
             };
             if (map[str] !== undefined)
                 str = map[str];
+            else if (!str.match(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/))
+                throw new Error("UUID: parse: invalid string representation " +
+                    "(expected \"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\")");
             hs2a(str,  0,  7, this,  0);
             hs2a(str,  9, 12, this,  4);
             hs2a(str, 14, 17, this,  6);
