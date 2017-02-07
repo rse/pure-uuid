@@ -20,6 +20,7 @@
         "url":  "http://github.com/rse/pure-uuid/issues"
     },
     "main": "./uuid.js",
+    "typings": "uuid.d.ts",
     "devDependencies": {
         "grunt":                "~1.0.1",
         "grunt-cli":            "~1.2.0",
