@@ -19,7 +19,8 @@
     "bugs": {
         "url":  "http://github.com/rse/pure-uuid/issues"
     },
-    "main": "./uuid.js",
+    "main":  "./uuid.js",
+    "types": "./uuid.d.ts",
     "devDependencies": {
         "grunt":                "~1.0.1",
         "grunt-cli":            "~1.2.0",
