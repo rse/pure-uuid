@@ -630,7 +630,7 @@
     /*  API method: format UUID into usual textual representation  */
     UUID.prototype.toString = function (type) {
         return this.format(type);
-    }
+    };
 
     /*  API method: parse UUID from usual textual representation  */
     UUID.prototype.parse = function (str, type) {
