@@ -40,7 +40,10 @@ interface UUID {
     parse(str: String): UUID;
 
     /*  formatting  */
-    format(): String;
+    format(type?: String): String;
+
+    /*  formatting (alias)  */
+    toString(type?: String): String;
 
     /*  importing  */
     import(arr: Number[]): UUID;
