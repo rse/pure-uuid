@@ -27,10 +27,10 @@
         "grunt-contrib-jshint": "~1.1.0",
         "grunt-contrib-uglify": "~3.0.1",
         "grunt-contrib-clean":  "~1.1.0",
-        "grunt-eslint":         "~19.0.0",
+        "grunt-eslint":         "~20.0.0",
         "grunt-mocha-test":     "~0.13.2",
-        "chai":                 "~3.5.0",
-        "mocha":                "~3.4.1"
+        "chai":                 "~4.1.0",
+        "mocha":                "~3.4.2"
     },
     "dependencies" : {
     },
