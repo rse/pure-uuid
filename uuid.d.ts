@@ -59,3 +59,4 @@ export interface UUIDConstructor {
 
 declare var UUID: UUIDConstructor;
 export default UUID;
+
