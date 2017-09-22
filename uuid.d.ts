@@ -23,35 +23,39 @@
 */
 
 interface UUID {
-    /*  default construction  */
-    (): UUID;
-
-    /*  parsing construction  */
-    (uuid: String): UUID;
-
-    /*  making construction  */
-    (version: Number): UUID;
-    (version: Number, ns: String, data: String): UUID;
-
     /*  making  */
-    make(version: Number, ...params: any[]): UUID;
+    make(version: number, ...params: any[]): UUID;
 
     /*  parsing  */
-    parse(str: String): UUID;
+    parse(str: string): UUID;
 
     /*  formatting  */
-    format(type?: String): String;
+    format(type?: string): string;
 
     /*  formatting (alias)  */
-    toString(type?: String): String;
+    tostring(type?: string): string;
 
     /*  importing  */
-    import(arr: Number[]): UUID;
+    import(arr: number[]): UUID;
 
     /*  exporting  */
-    export(): Number[];
+    export(): number[];
 
     /*  byte-wise comparison  */
     compare(other: UUID): boolean;
 }
 
+export interface UUIDConstructor {
+  /*  default construction  */
+  new(): UUID;
+
+  /*  parsing construction  */
+  new(uuid: string): UUID;
+
+  /*  making construction  */
+  new(version: number): UUID;
+  new(version: number, ns: string, data: string): UUID;
+}
+
+declare var UUID: UUIDConstructor;
+export default UUID;
