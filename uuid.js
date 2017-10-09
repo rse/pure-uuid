@@ -29,9 +29,11 @@
     if (typeof define === "function" && typeof define.amd !== "undefined")
         /*  AMD environment  */
         define(function () { return factory(root); });
-    else if (typeof module === "object" && typeof module.exports === "object")
+    else if (typeof module === "object" && typeof module.exports === "object") {
         /*  CommonJS environment  */
         module.exports = factory(root);
+        module.exports["default"] = module.exports;
+    }
     else
         /*  Browser environment  */
         root[name] = factory(root);
