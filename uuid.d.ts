@@ -33,7 +33,7 @@ interface UUID {
     format(type?: string): string;
 
     /*  formatting (alias)  */
-    tostring(type?: string): string;
+    toString(type?: string): string;
 
     /*  importing  */
     import(arr: number[]): UUID;
