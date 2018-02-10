@@ -204,6 +204,16 @@ uuid = new UUID(4);
 
 //  make a UUID version 5 (name-based, SHA-1)
 uuid = new UUID(5, "ns:URL", "http://example.com/");
+
+//  format a UUID in standard format
+str = uuid.format()
+str = uuid.format("std")
+
+//  format a UUID in Base16 format
+str = uuid.format("b16")
+
+//  format a UUID in ZeroMQ-Base85 format
+str = uuid.format("z85")
 ```
 
 License
