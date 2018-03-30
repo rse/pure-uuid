@@ -1,4 +1,1 @@
-/node_modules/
-*~
-*#*
-*.min.js
+node_modules
