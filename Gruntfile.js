@@ -25,13 +25,6 @@
 /* global module: true */
 module.exports = function (grunt) {
     grunt.initConfig({
-        jshint: {
-            options: {
-                jshintrc: "jshint.json"
-            },
-            gruntfile:   [ "Gruntfile.js" ],
-            sourcefiles: [ "uuid.js", "uuid.test.js" ]
-        },
         eslint: {
             options: {
                 configFile: "eslint.json"
@@ -62,12 +55,11 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.loadNpmTasks("grunt-contrib-jshint");
     grunt.loadNpmTasks("grunt-contrib-uglify");
     grunt.loadNpmTasks("grunt-contrib-clean");
     grunt.loadNpmTasks("grunt-eslint");
     grunt.loadNpmTasks("grunt-mocha-test");
 
-    grunt.registerTask("default", [ "jshint", "eslint", "mochaTest", "uglify" ]);
+    grunt.registerTask("default", [ "eslint", "mochaTest", "uglify" ]);
 };
 

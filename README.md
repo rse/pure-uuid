@@ -102,16 +102,9 @@ hexadecimal digits.
 Getting Pure-UUID
 -----------------
 
-You can conveniently get Pure-UUID in various ways:
-
-- Git: directly clone the official repository:<br/>
-  `$ git clone https://github.com/rse/pure-uuid.git`
-
-- NPM: install as server component via the NPM package manager:<br/>
-  `$ npm install pure-uuid`
-
-- cURL: downloading only the main file from the repository:<br/>
-  `$ curl -O https://raw.githubusercontent.com/rse/pure-uuid/master/uuid.js`
+```
+$ npm install pure-uuid
+```
 
 Using Pure-UUID
 ---------------
