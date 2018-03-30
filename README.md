@@ -107,9 +107,6 @@ You can conveniently get Pure-UUID in various ways:
 - Git: directly clone the official repository:<br/>
   `$ git clone https://github.com/rse/pure-uuid.git`
 
-- Bower: install as client component via the Bower component manager:<br/>
-  `$ bower install pure-uuid`
-
 - NPM: install as server component via the NPM package manager:<br/>
   `$ npm install pure-uuid`
 
