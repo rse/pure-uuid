@@ -22,15 +22,15 @@
     "main":  "./uuid.js",
     "types": "./uuid.d.ts",
     "devDependencies": {
-        "grunt":                "~1.0.2",
-        "grunt-cli":            "~1.2.0",
-        "grunt-contrib-jshint": "~1.1.0",
-        "grunt-contrib-uglify": "~3.3.0",
-        "grunt-contrib-clean":  "~1.1.0",
-        "grunt-eslint":         "~20.1.0",
-        "grunt-mocha-test":     "~0.13.3",
-        "chai":                 "~4.1.2",
-        "mocha":                "~5.1.0"
+        "grunt":                "1.0.3",
+        "grunt-cli":            "1.2.0",
+        "grunt-contrib-jshint": "1.1.0",
+        "grunt-contrib-uglify": "3.3.0",
+        "grunt-contrib-clean":  "1.1.0",
+        "grunt-eslint":         "21.0.0",
+        "grunt-mocha-test":     "0.13.3",
+        "chai":                 "4.1.2",
+        "mocha":                "5.2.0"
     },
     "dependencies" : {
     },
