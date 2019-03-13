@@ -42,7 +42,7 @@ interface UUID {
     export(): number[];
 
     /*  byte-wise comparison  */
-    compare(other: UUID): boolean;
+    compare(other: UUID): number;
 
     /*  fold 1-4 times  */
     fold(k: number): number[];
