@@ -25,7 +25,6 @@
 /*  Universal Module Definition (UMD)  */
 (function (root, name, factory) {
     /* global define: false */
-    /* global module: false */
     if (typeof define === "function" && typeof define.amd !== "undefined")
         /*  AMD environment  */
         define(function () { return factory(root); });
@@ -690,7 +689,6 @@
     /*  inherit from a standard class which provides the
         best UUID representation in the particular environment  */
     /* global Uint8Array: false */
-    /* global Buffer: false */
     if (typeof Uint8Array !== "undefined")
         /*  HTML5 TypedArray (browser environments: IE10, FF, CH, SF, OP)
             (http://caniuse.com/#feat=typedarrays)  */

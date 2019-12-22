@@ -22,11 +22,6 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/* global require: true */
-/* global global: true */
-/* global describe: true */
-/* global it: true */
-/* global expect: true */
 /* jshint -W030: false */
 /* eslint no-unused-expressions: 0 */
 
