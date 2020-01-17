@@ -35,6 +35,9 @@ interface UUID {
     /*  formatting (alias)  */
     toString(type?: string): string;
 
+    /*  sensible JSON serialization  */
+    toJSON(): string;
+
     /*  importing  */
     import(arr: number[]): UUID;
 

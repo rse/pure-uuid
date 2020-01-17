@@ -66,6 +66,8 @@ describe("UUID base functionality", function () {
             .to.be.equal("Ew.WIfbd-xMePrOKsd[-");
         expect(new UUID().parse("Ew.WIfbd-xMePrOKsd[-", "z85").export())
             .to.be.deep.equal([0x7d,0xa7,0x82,0x84,0x2f,0x14,0x5e,0x7f,0x95,0xe1,0xba,0xaa,0x90,0x27,0xc2,0x6f]);
+        expect(JSON.stringify(new UUID("7da78284-2f14-5e7f-95e1-baaa9027c26f")))
+            .to.be.equal("\"7da78284-2f14-5e7f-95e1-baaa9027c26f\"");
     });
     it("should be able to make various UUID versions", function () {
         expect(new UUID(1).format())
