@@ -891,6 +891,11 @@
         }
         return 0;
     };
+	
+    /*  API method: is UUID equal another one?  */
+    UUID.prototype.equal = function (other) {
+        return this.compare(other)===0;
+    };
 
     /*  API method: hash UUID by XOR-folding it k times  */
     UUID.prototype.fold = function (k) {

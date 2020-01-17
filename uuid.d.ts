@@ -47,6 +47,9 @@ interface UUID {
     /*  byte-wise comparison  */
     compare(other: UUID): number;
 
+    /*  UUID equal another  */
+    equal(other: UUID): boolean;   
+    
     /*  fold 1-4 times  */
     fold(k: number): number[];
 }
