@@ -892,7 +892,7 @@
         return 0;
     };
 
-    /*  API method: is UUID equal another one?  */
+    /*  API method: check whether UUID is equal another one  */
     UUID.prototype.equal = function (other) {
         return this.compare(other) === 0;
     };

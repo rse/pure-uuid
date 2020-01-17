@@ -145,7 +145,7 @@ interface UUID {
     format(type?: string): string;
 
     /*  formatting (alias)  */
-    tostring(type?: string): string;
+    toString(type?: string): string;
 
     /*  sensible JSON serialization  */
     toJSON(): string;
@@ -158,6 +158,9 @@ interface UUID {
 
     /*  byte-wise comparison  */
     compare(other: UUID): boolean;
+
+    /*  equal check  */
+    equal(other: UUID): boolean;
 
     /*  fold 1-4 times  */
     fold(k: number): number[];
