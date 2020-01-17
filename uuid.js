@@ -648,7 +648,7 @@
         var rot = ui64_clone(state);
         ui64_ror(rot, 59);
 
-		/*  calculate: rotate32(xorshifted, rot)  */
+        /*  calculate: rotate32(xorshifted, rot)  */
         ui64_and(output, this.mask);
         var k = ui64_i2n(rot);
         var output2 = ui64_clone(output);
@@ -891,7 +891,7 @@
         }
         return 0;
     };
-	
+
     /*  API method: is UUID equal another one?  */
     UUID.prototype.equal = function (other) {
         return this.compare(other)===0;
