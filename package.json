@@ -30,7 +30,7 @@
         "grunt-eslint":         "22.0.0",
         "grunt-mocha-test":     "0.13.3",
         "chai":                 "4.2.0",
-        "mocha":                "6.2.2"
+        "mocha":                "7.0.0"
     },
     "dependencies" : {
     },
