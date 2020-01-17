@@ -31,13 +31,12 @@
     else if (typeof module === "object" && typeof module.exports === "object") {
         /*  CommonJS environment  */
         module.exports = factory(root);
-        module.exports["default"] = module.exports;
+        module.exports.default = module.exports;
     }
     else
         /*  Browser environment  */
         root[name] = factory(root);
 }(this, "UUID", function (/* root */) {
-
     /*  array to hex-string conversion  */
     var a2hs = function (bytes, begin, end, uppercase, str, pos) {
         var mkNum = function (num, uppercase) {
@@ -85,7 +84,9 @@
     var z85_encode = function (data, size) {
         if ((size % 4) !== 0)
             throw new Error("z85_encode: invalid input length (multiple of 4 expected)");
-        var str = "", i = 0, value = 0;
+        var str = "";
+        var i = 0;
+        var value = 0;
         while (i < size) {
             value = (value * 256) + data[i++];
             if ((i % 4) === 0) {
@@ -96,7 +97,7 @@
                     divisor /= 85;
                 }
                 value = 0;
-             }
+            }
         }
         return str;
     };
@@ -106,7 +107,9 @@
             throw new Error("z85_decode: invalid input length (multiple of 5 expected)");
         if (typeof dest === "undefined")
             dest = new Array(l * 4 / 5);
-        var i = 0, j = 0, value = 0;
+        var i = 0;
+        var j = 0;
+        var value = 0;
         while (i < l) {
             var idx = str.charCodeAt(i++) - 32;
             if (idx < 0 || idx >= z85_decoder.length)
@@ -400,7 +403,6 @@
     var ui64_xor = function (x, y) {
         for (var i = 0; i < UI64_DIGITS; i++)
             x[i] ^= y[i];
-        return;
     };
 
     /*  this is just a really minimal UI32 functionality,
@@ -416,8 +418,8 @@
     /*  bitwise rotate 32-bit number to the left  */
     var ui32_rol = function (num, cnt) {
         return (
-              ((num <<        cnt ) & 0xFFFFFFFF)
-            | ((num >>> (32 - cnt)) & 0xFFFFFFFF)
+            ((num <<        cnt ) & 0xFFFFFFFF) |
+            ((num >>> (32 - cnt)) & 0xFFFFFFFF)
         );
     };
 
@@ -433,10 +435,13 @@
 
         /*  determine the appropriate additive constant for the current iteration  */
         function sha1_kt (t) {
-            return (t < 20) ?  1518500249 :
-                   (t < 40) ?  1859775393 :
-                   (t < 60) ? -1894007588 :
-                               -899497514;
+            /* eslint indent: off */
+            return (
+                (t < 20) ?  1518500249 :
+                (t < 40) ?  1859775393 :
+                (t < 60) ? -1894007588 :
+                            -899497514
+            );
         }
 
         /*  append padding  */
@@ -695,7 +700,7 @@
         UUID.prototype = new Uint8Array(16);
     else if (Buffer)
         /*  Node Buffer (server environments: Node.js, IO.js)  */
-        UUID.prototype = new Buffer(16);
+        UUID.prototype = Buffer.alloc(16);
     else
         /*  JavaScript (any environment)  */
         UUID.prototype = new Array(16);
