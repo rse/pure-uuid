@@ -813,6 +813,11 @@
         return this.format(type);
     };
 
+    /*  API method: overrides JSON serialization with usual text representation  */
+    UUID.prototype.toJSON = function () {
+        return this.format();
+    };
+
     /*  API method: parse UUID from usual textual representation  */
     UUID.prototype.parse = function (str, type) {
         if (typeof str !== "string")

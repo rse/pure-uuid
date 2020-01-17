@@ -147,6 +147,9 @@ interface UUID {
     /*  formatting (alias)  */
     tostring(type?: string): string;
 
+    /*  sensible JSON serialization  */
+    toJSON(): string;
+
     /*  importing  */
     import(arr: number[]): UUID;
 
