@@ -815,7 +815,7 @@
 
     /*  API method: overrides JSON serialization with usual text representation  */
     UUID.prototype.toJSON = function () {
-        return this.format();
+        return this.format("std");
     };
 
     /*  API method: parse UUID from usual textual representation  */
