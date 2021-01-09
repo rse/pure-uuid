@@ -72,4 +72,9 @@ rules:
     operator-linebreak:                  off
     computed-property-spacing:           off
     quote-props:                         off
+    multiline-ternary:                   off
+
+    #   disabled rules (temporarily)
+    no-var:                              off
+
 
