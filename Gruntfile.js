@@ -27,7 +27,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         eslint: {
             options: {
-                configFile: "eslint.yaml"
+                overrideConfigFile: "eslint.yaml"
             },
             target: [ "uuid.js", "uuid.test.js" ],
         },
