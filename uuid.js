@@ -921,6 +921,26 @@
 
     UUID.PCG = PCG;
 
+    UUID.extraSeed = function (extraSeed) {
+        if (typeof extraSeed !== "string") {
+            throw new Error("UUID: extraSeed: invalid argument (string expected)");
+        }
+        var expanded = sha1_core(
+          s2a(extraSeed, { ibits: 8, obits: 32, obigendian: true }),
+          extraSeed.length * 8)
+        for (var i = 0; i < expanded.length; i++) {
+            ui64_xor(pcg.state, ui64_n2i((expanded[i] >>> 0)));
+        }
+    }
+
+    UUID.reseed = function (seed) {
+        if (typeof seed !== "string") {
+            throw new Error("UUID: reseed: invalid argument (string expected)");
+        }
+        pcg = new PCG(0);
+        UUID.extraSeed(seed);
+    }
+
     /*  export API  */
     return UUID;
 }));
