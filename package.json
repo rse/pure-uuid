@@ -44,6 +44,7 @@
     },
     "scripts": {
         "prepublishOnly":  "grunt default",
-        "build":           "grunt default"
+        "build":           "grunt default",
+        "test":            "grunt mochaTest"
     }
 }
