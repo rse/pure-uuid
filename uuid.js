@@ -630,8 +630,31 @@
         this.state = ui64_clone(this.inc);
         this.next();
         ui64_and(this.state, this.mask);
-        seed = ui64_n2i(seed !== undefined ?
-            (seed >>> 0) : ((Math.random() * 0xffffffff) >>> 0));
+        var arr;
+        if (seed !== undefined)
+            /*  external seeding  */
+            seed = ui64_n2i(seed >>> 0);
+        else if (typeof window === "object" &&
+            typeof window.crypto === "object" &&
+            typeof window.crypto.getRandomValues === "function") {
+            /*  internal strong seeding with WebCrypto API (in browsers)  */
+            arr = new Uint32Array(2);
+            window.crypto.getRandomValues(arr);
+            seed = ui64_or(ui64_n2i(arr[0] >>> 0), ui64_ror(ui64_n2i(arr[1] >>> 0), 32));
+        }
+        else if (typeof globalThis === "object" &&
+            typeof globalThis.crypto === "object" &&
+            typeof globalThis.crypto.getRandomValues === "function") {
+            /*  internal strong seeding with WebCrypto API (in Node.js)  */
+            arr = new Uint32Array(2);
+            globalThis.crypto.getRandomValues(arr);
+            seed = ui64_or(ui64_n2i(arr[0] >>> 0), ui64_ror(ui64_n2i(arr[1] >>> 0), 32));
+        }
+        else {
+            /*  internal weak seeding with Math.random() and Date  */
+            seed = ui64_n2i((Math.random() * 0xffffffff) >>> 0);
+            ui64_or(seed, ui64_ror(ui64_n2i((new Date()).getTime()), 32));
+        }
         ui64_or(this.state, seed);
         this.next();
     };
