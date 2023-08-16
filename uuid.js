@@ -687,7 +687,15 @@
         /*  return pseudo-random number  */
         return ui64_i2n(output);
     };
+    PCG.prototype.reseed = function (seed) {
+        if (typeof seed !== "string")
+            throw new Error("UUID: PCG: seed: invalid argument (string expected)");
+        var arr = sha1_core(s2a(seed, { ibits: 8, obits: 32, obigendian: true }), seed.length * 8)
+        for (var i = 0; i < arr.length; i++)
+            ui64_xor(pcg.state, ui64_n2i((arr[i] >>> 0)));
+    }
     var pcg = new PCG();
+    PCG.reseed = function (seed) { pcg.reseed(seed) };
 
     /*  utility function: simple Pseudo Random Number Generator (PRNG)  */
     var prng = function (len, radix) {
