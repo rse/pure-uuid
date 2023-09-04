@@ -54,7 +54,7 @@ interface UUID {
     fold(k: number): number[];
 }
 
-export interface UUIDConstructor {
+interface UUIDConstructor {
   /*  default construction  */
   new(): UUID;
 
