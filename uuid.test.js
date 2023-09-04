@@ -105,5 +105,50 @@ describe("UUID base functionality", function () {
         expect(function () { new UUID().parse("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"); })
             .to.throw(Error);
     });
+    it("reseed and extraSeed should work reliably", function () {
+        var uuid0, uuid1, uuid2, uuid3, uuid4;
+
+        UUID.reseed("seed0");
+        expect(new UUID(4).format())
+          .to.be.equal(uuid0 = "f8a86041-ca57-4c76-b48a-6dedf4b9acf4");
+        expect(new UUID(4).format())
+          .to.be.equal(uuid1 = "704a0f12-1376-4ef0-b6e1-9d57e5a8a492")
+          .to.not.be.equal(uuid0);
+        UUID.reseed("seed1");
+        expect(new UUID(4).format())
+          .to.be.equal(uuid1 = "31e91c7c-8e7c-4afc-8aa8-c7e42a48b205")
+          .to.not.be.equal(uuid0);
+        UUID.reseed("seed0");
+        expect(new UUID(4).format()).to.be.equal(uuid0);
+
+        UUID.reseed("seed0");
+        expect(new UUID(4).format()).to.be.equal(uuid0);
+        UUID.extraSeed("seed1");
+        expect(new UUID(4).format())
+          .to.be.equal(uuid2 = "dfbf1436-95c6-472a-bc22-ab07219721b4")
+          .to.not.be.equal(uuid1);
+        UUID.extraSeed("seed2");
+        expect(new UUID(4).format())
+          .to.be.equal(uuid3 = "03f775f7-cd94-4896-aefa-edac6b508025")
+          .to.not.be.equal(uuid1)
+          .to.not.be.equal(uuid2);
+        UUID.reseed("seed0");
+        expect(new UUID(4).format()).to.be.equal(uuid0);
+
+        UUID.reseed("seed1");
+        expect(new UUID(4).format()).to.be.equal(uuid1);
+        expect(new UUID(4).format())
+          .to.be.equal("4d01aa6c-0fdd-48d7-b118-38123215d703")
+          .to.not.be.equal(uuid2);
+
+        UUID.reseed("seed2");
+        expect(new UUID(4).format())
+          .to.be.equal(uuid4 = "ec8a811e-8d27-433e-8ba9-b3a4b199cd2e")
+          .to.not.be.equal(uuid3);
+        expect(new UUID(4).format())
+          .to.be.equal("d41053e3-447a-49ca-94f5-240987c0a9c2")
+          .to.not.be.equal(uuid3)
+          .to.not.be.equal(uuid4)
+    })
 });
 

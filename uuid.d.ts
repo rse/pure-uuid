@@ -64,6 +64,12 @@ interface UUIDConstructor {
   /*  making construction  */
   new(version: number): UUID;
   new(version: number, ns: string, data: string): UUID;
+
+  /* reseed the internal pseudo random number generator */
+  reseed(seed: string);
+
+  /* provide extra entropy to the internal pseudo random number generator */
+  extraSeed(extraSeed: string);
 }
 
 declare var UUID: UUIDConstructor;
