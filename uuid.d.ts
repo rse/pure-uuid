@@ -24,48 +24,48 @@
 
 interface UUID {
     /*  making  */
-    make(version: number, ...params: any[]): UUID;
+    make(version: number, ...params: any[]): UUID
 
     /*  parsing  */
-    parse(str: string): UUID;
+    parse(str: string): UUID
 
     /*  formatting  */
-    format(type?: string): string;
+    format(type?: string): string
 
     /*  formatting (alias)  */
-    toString(type?: string): string;
+    toString(type?: string): string
 
     /*  sensible JSON serialization  */
-    toJSON(): string;
+    toJSON(): string
 
     /*  importing  */
-    import(arr: number[]): UUID;
+    import(arr: number[]): UUID
 
     /*  exporting  */
-    export(): number[];
+    export(): number[]
 
     /*  byte-wise comparison  */
-    compare(other: UUID): number;
+    compare(other: UUID): number
 
     /*  equal check  */
-    equal(other: UUID): boolean;
+    equal(other: UUID): boolean
 
     /*  fold 1-4 times  */
-    fold(k: number): number[];
+    fold(k: number): number[]
 }
 
 interface UUIDConstructor {
   /*  default construction  */
-  new(): UUID;
+  new(): UUID
 
   /*  parsing construction  */
-  new(uuid: string): UUID;
+  new(uuid: string): UUID
 
   /*  making construction  */
-  new(version: number): UUID;
-  new(version: number, ns: string, data: string): UUID;
+  new(version: number): UUID
+  new(version: number, ns: string, data: string): UUID
 }
 
-declare var UUID: UUIDConstructor;
-export = UUID;
+declare var UUID: UUIDConstructor
+export = UUID
 
