@@ -332,7 +332,7 @@
         return ui64_i2n(ov)
     }
 
-    /*  rotate right UI64 (x) by a "s" bits and return overflow/carry as number  */
+    /*  rotate right UI64 (x) by "s" bits and return overflow/carry as UI64  */
     const ui64_ror = function (x, s) {
         /*  sanity check shifting  */
         if (s > (UI64_DIGITS * UI64_DIGIT_BITS))
