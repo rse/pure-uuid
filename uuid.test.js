@@ -29,11 +29,11 @@ global.chai = require("chai")
 global.expect = global.chai.expect
 global.chai.config.includeStack = true
 
-var UUID = require("./uuid.js")
+const UUID = require("./uuid.js")
 
 describe("UUID base functionality", function () {
     it("should provide basic object functionality", function () {
-        var uuid = new UUID()
+        const uuid = new UUID()
         expect(uuid).to.be.a("object")
         expect(uuid).to.respondTo("make")
         expect(uuid).to.respondTo("parse")

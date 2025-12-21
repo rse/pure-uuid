@@ -120,6 +120,6 @@ interface UUIDConstructor {
   new(version: number, ns: string, data: string): UUID
 }
 
-declare var UUID: UUIDConstructor
+declare const UUID: UUIDConstructor
 export = UUID
 

@@ -64,7 +64,6 @@ export default [
         },
         rules: {
             "curly":                                              "off",
-            "no-var":                                             "off",
             "camelcase":                                          "off",
 
             "@stylistic/indent":                                  [ "error", 4, { SwitchCase: 1 } ],

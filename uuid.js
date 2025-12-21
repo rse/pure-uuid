@@ -38,36 +38,36 @@
         root[name] = factory(root)
 }(this, "UUID", function (/* root */) {
     /*  array to hex-string conversion  */
-    var a2hs = function (bytes, begin, end, uppercase, str, pos) {
-        var mkNum = function (num, uppercase) {
-            var base16 = num.toString(16)
+    const a2hs = function (bytes, begin, end, uppercase, str, pos) {
+        const mkNum = function (num, uppercase) {
+            let base16 = num.toString(16)
             if (base16.length < 2)
                 base16 = "0" + base16
             if (uppercase)
                 base16 = base16.toUpperCase()
             return base16
         }
-        for (var i = begin; i <= end; i++)
+        for (let i = begin; i <= end; i++)
             str[pos++] = mkNum(bytes[i], uppercase)
         return str
     }
 
     /*  hex-string to array conversion  */
-    var hs2a = function (str, begin, end, bytes, pos) {
-        for (var i = begin; i <= end; i += 2)
+    const hs2a = function (str, begin, end, bytes, pos) {
+        for (let i = begin; i <= end; i += 2)
             bytes[pos++] = parseInt(str.substr(i, 2), 16)
     }
 
     /*  This library provides Z85: ZeroMQ's Base-85 encoding/decoding
         (see http://rfc.zeromq.org/spec:32 for details)  */
 
-    var z85_encoder = (
+    const z85_encoder = (
         "0123456789" +
          "abcdefghijklmnopqrstuvwxyz" +
          "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
          ".-:+=^!/*?&<>()[]{}@%$#"
     ).split("")
-    var z85_decoder = [
+    const z85_decoder = [
         0x00, 0x44, 0x00, 0x54, 0x53, 0x52, 0x48, 0x00,
         0x4B, 0x4C, 0x46, 0x41, 0x00, 0x3F, 0x3E, 0x45,
         0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
@@ -81,18 +81,18 @@
         0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20,
         0x21, 0x22, 0x23, 0x4F, 0x00, 0x50, 0x00, 0x00
     ]
-    var z85_encode = function (data, size) {
+    const z85_encode = function (data, size) {
         if ((size % 4) !== 0)
             throw new Error("z85_encode: invalid input length (multiple of 4 expected)")
-        var str = ""
-        var i = 0
-        var value = 0
+        let str = ""
+        let i = 0
+        let value = 0
         while (i < size) {
             value = (value * 256) + data[i++]
             if ((i % 4) === 0) {
-                var divisor = 85 * 85 * 85 * 85
+                let divisor = 85 * 85 * 85 * 85
                 while (divisor >= 1) {
-                    var idx = Math.floor(value / divisor) % 85
+                    const idx = Math.floor(value / divisor) % 85
                     str += z85_encoder[idx]
                     divisor /= 85
                 }
@@ -101,22 +101,22 @@
         }
         return str
     }
-    var z85_decode = function (str, dest) {
-        var l = str.length
+    const z85_decode = function (str, dest) {
+        const l = str.length
         if ((l % 5) !== 0)
             throw new Error("z85_decode: invalid input length (multiple of 5 expected)")
         if (typeof dest === "undefined")
             dest = new Array(l * 4 / 5)
-        var i = 0
-        var j = 0
-        var value = 0
+        let i = 0
+        let j = 0
+        let value = 0
         while (i < l) {
-            var idx = str.charCodeAt(i++) - 32
+            const idx = str.charCodeAt(i++) - 32
             if (idx < 0 || idx >= z85_decoder.length)
                 break
             value = (value * 85) + z85_decoder[idx]
             if ((i % 5) === 0) {
-                var divisor = 256 * 256 * 256
+                let divisor = 256 * 256 * 256
                 while (divisor >= 1) {
                     dest[j++] = Math.trunc((value / divisor) % 256)
                     divisor /= 256
@@ -131,21 +131,21 @@
         strings and 8/16/32-bit big/little-endian word arrays.  */
 
     /*  string to array conversion  */
-    var s2a = function (s, _options) {
+    const s2a = function (s, _options) {
         /*  determine options  */
-        var options = { ibits: 8, obits: 8, obigendian: true }
-        for (var opt in _options)
+        const options = { ibits: 8, obits: 8, obigendian: true }
+        for (const opt in _options)
             if (typeof options[opt] !== "undefined")
                 options[opt] = _options[opt]
 
         /*  convert string to array  */
-        var a = []
-        var i = 0
-        var c, C
-        var ck = 0
-        var w
-        var wk = 0
-        var sl = s.length
+        const a = []
+        let i = 0
+        let c, C
+        let ck = 0
+        let w
+        let wk = 0
+        const sl = s.length
         for (;;) {
             /*  fetch next octet from string  */
             if (ck === 0)
@@ -173,25 +173,25 @@
     }
 
     /*  array to string conversion  */
-    var a2s = function (a, _options) {
+    const a2s = function (a, _options) {
         /*  determine options  */
-        var options = { ibits: 32, ibigendian: true }
-        for (var opt in _options)
+        const options = { ibits: 32, ibigendian: true }
+        for (const opt in _options)
             if (typeof options[opt] !== "undefined")
                 options[opt] = _options[opt]
 
         /* convert array to string */
-        var s = ""
-        var imask = 0xFFFFFFFF
+        let s = ""
+        let imask = 0xFFFFFFFF
         if (options.ibits < 32)
             imask = (1 << options.ibits) - 1
-        var al = a.length
-        for (var i = 0; i < al; i++) {
+        const al = a.length
+        for (let i = 0; i < al; i++) {
             /* fetch next word from array */
-            var w = a[i] & imask
+            const w = a[i] & imask
 
             /* place next octet into string */
-            for (var j = 0; j < options.ibits; j += 8) {
+            for (let j = 0; j < options.ibits; j += 8) {
                 if (options.ibigendian)
                     s += String.fromCharCode((w >> ((options.ibits - 8) - j)) & 0xFF)
                 else
@@ -205,29 +205,29 @@
         just sufficient enough for the UUID v1 generator and PCG PRNG!  */
 
     /*  UI64 constants  */
-    var UI64_DIGITS     = 8    /* number of digits */
-    var UI64_DIGIT_BITS = 8    /* number of bits in a digit */
-    var UI64_DIGIT_BASE = 256  /* the numerical base of a digit */
+    const UI64_DIGITS     = 8    /* number of digits */
+    const UI64_DIGIT_BITS = 8    /* number of bits in a digit */
+    const UI64_DIGIT_BASE = 256  /* the numerical base of a digit */
 
     /*  convert between individual digits and the UI64 representation  */
-    var ui64_d2i = function (d7, d6, d5, d4, d3, d2, d1, d0) {
+    const ui64_d2i = function (d7, d6, d5, d4, d3, d2, d1, d0) {
         return [ d0, d1, d2, d3, d4, d5, d6, d7 ]
     }
 
     /*  the zero represented as an UI64  */
-    var ui64_zero = function () {
+    const ui64_zero = function () {
         return ui64_d2i(0, 0, 0, 0, 0, 0, 0, 0)
     }
 
     /*  clone the UI64  */
-    var ui64_clone = function (x) {
+    const ui64_clone = function (x) {
         return x.slice(0)
     }
 
     /*  convert between number and UI64 representation  */
-    var ui64_n2i = function (n) {
-        var ui64 = ui64_zero()
-        for (var i = 0; i < UI64_DIGITS; i++) {
+    const ui64_n2i = function (n) {
+        const ui64 = ui64_zero()
+        for (let i = 0; i < UI64_DIGITS; i++) {
             ui64[i] = Math.floor(n % UI64_DIGIT_BASE)
             n /= UI64_DIGIT_BASE
         }
@@ -235,9 +235,9 @@
     }
 
     /*  convert between UI64 representation and number  */
-    var ui64_i2n = function (x) {
-        var n = 0
-        for (var i = UI64_DIGITS - 1; i >= 0; i--) {
+    const ui64_i2n = function (x) {
+        let n = 0
+        for (let i = UI64_DIGITS - 1; i >= 0; i--) {
             n *= UI64_DIGIT_BASE
             n += x[i]
         }
@@ -245,9 +245,9 @@
     }
 
     /*  add UI64 (y) to UI64 (x) and return overflow/carry as number  */
-    var ui64_add = function (x, y) {
-        var carry = 0
-        for (var i = 0; i < UI64_DIGITS; i++) {
+    const ui64_add = function (x, y) {
+        let carry = 0
+        for (let i = 0; i < UI64_DIGITS; i++) {
             carry += x[i] + y[i]
             x[i]   = Math.floor(carry % UI64_DIGIT_BASE)
             carry  = Math.floor(carry / UI64_DIGIT_BASE)
@@ -256,9 +256,9 @@
     }
 
     /*  multiply number (n) to UI64 (x) and return overflow/carry as number  */
-    var ui64_muln = function (x, n) {
-        var carry = 0
-        for (var i = 0; i < UI64_DIGITS; i++) {
+    const ui64_muln = function (x, n) {
+        let carry = 0
+        for (let i = 0; i < UI64_DIGITS; i++) {
             carry += x[i] * n
             x[i]   = Math.floor(carry % UI64_DIGIT_BASE)
             carry  = Math.floor(carry / UI64_DIGIT_BASE)
@@ -267,16 +267,16 @@
     }
 
     /*  multiply UI64 (y) to UI64 (x) and return overflow/carry as UI64  */
-    var ui64_mul = function (x, y) {
-        var i, j
+    const ui64_mul = function (x, y) {
+        let i, j
 
         /*  clear temporary result buffer zx  */
-        var zx = new Array(UI64_DIGITS + UI64_DIGITS)
+        const zx = new Array(UI64_DIGITS + UI64_DIGITS)
         for (i = 0; i < (UI64_DIGITS + UI64_DIGITS); i++)
             zx[i] = 0
 
         /*  perform multiplication operation  */
-        var carry
+        let carry
         for (i = 0; i < UI64_DIGITS; i++) {
             /*  calculate partial product and immediately add to zx  */
             carry = 0
@@ -301,27 +301,28 @@
     }
 
     /*  AND operation: UI64 (x) &= UI64 (y)  */
-    var ui64_and = function (x, y) {
-        for (var i = 0; i < UI64_DIGITS; i++)
+    const ui64_and = function (x, y) {
+        for (let i = 0; i < UI64_DIGITS; i++)
             x[i] &= y[i]
         return x
     }
 
     /*  OR operation: UI64 (x) |= UI64 (y)  */
-    var ui64_or = function (x, y) {
-        for (var i = 0; i < UI64_DIGITS; i++)
+    const ui64_or = function (x, y) {
+        for (let i = 0; i < UI64_DIGITS; i++)
             x[i] |= y[i]
         return x
     }
 
     /*  rotate right UI64 (x) by a "s" bits and return overflow/carry as number  */
-    var ui64_rorn = function (x, s) {
-        var ov = ui64_zero()
+    const ui64_rorn = function (x, s) {
+        const ov = ui64_zero()
         if ((s % UI64_DIGIT_BITS) !== 0)
             throw new Error("ui64_rorn: only bit rotations supported with a multiple of digit bits")
-        var k = Math.floor(s / UI64_DIGIT_BITS)
-        for (var i = 0; i < k; i++) {
-            for (var j = UI64_DIGITS - 1 - 1; j >= 0; j--)
+        const k = Math.floor(s / UI64_DIGIT_BITS)
+        for (let i = 0; i < k; i++) {
+            let j
+            for (j = UI64_DIGITS - 1 - 1; j >= 0; j--)
                 ov[j + 1] = ov[j]
             ov[0] = x[0]
             for (j = 0; j < UI64_DIGITS - 1; j++)
@@ -332,22 +333,22 @@
     }
 
     /*  rotate right UI64 (x) by a "s" bits and return overflow/carry as number  */
-    var ui64_ror = function (x, s) {
+    const ui64_ror = function (x, s) {
         /*  sanity check shifting  */
         if (s > (UI64_DIGITS * UI64_DIGIT_BITS))
             throw new Error("ui64_ror: invalid number of bits to shift")
 
         /*  prepare temporary buffer zx  */
-        var zx = new Array(UI64_DIGITS + UI64_DIGITS)
-        var i
+        const zx = new Array(UI64_DIGITS + UI64_DIGITS)
+        let i
         for (i = 0; i < UI64_DIGITS; i++) {
             zx[i + UI64_DIGITS] = x[i]
             zx[i] = 0
         }
 
         /*  shift bits inside zx  */
-        var k1 = Math.floor(s / UI64_DIGIT_BITS)
-        var k2 = s % UI64_DIGIT_BITS
+        const k1 = Math.floor(s / UI64_DIGIT_BITS)
+        const k2 = s % UI64_DIGIT_BITS
         for (i = k1; i < UI64_DIGITS + UI64_DIGITS - 1; i++) {
             zx[i - k1] =
                 ((zx[i] >>> k2) |
@@ -367,22 +368,22 @@
     }
 
     /*  rotate left UI64 (x) by a "s" bits and return overflow/carry as UI64  */
-    var ui64_rol = function (x, s) {
+    const ui64_rol = function (x, s) {
         /*  sanity check shifting  */
         if (s > (UI64_DIGITS * UI64_DIGIT_BITS))
             throw new Error("ui64_rol: invalid number of bits to shift")
 
         /*  prepare temporary buffer zx  */
-        var zx = new Array(UI64_DIGITS + UI64_DIGITS)
-        var i
+        const zx = new Array(UI64_DIGITS + UI64_DIGITS)
+        let i
         for (i = 0; i < UI64_DIGITS; i++) {
             zx[i + UI64_DIGITS] = 0
             zx[i] = x[i]
         }
 
         /*  shift bits inside zx  */
-        var k1 = Math.floor(s / UI64_DIGIT_BITS)
-        var k2 = s % UI64_DIGIT_BITS
+        const k1 = Math.floor(s / UI64_DIGIT_BITS)
+        const k2 = s % UI64_DIGIT_BITS
         for (i = UI64_DIGITS - 1 - k1; i > 0; i--) {
             zx[i + k1] =
                 ((zx[i] << k2) |
@@ -400,8 +401,8 @@
     }
 
     /*  XOR UI64 (y) onto UI64 (x) and return x  */
-    var ui64_xor = function (x, y) {
-        for (var i = 0; i < UI64_DIGITS; i++)
+    const ui64_xor = function (x, y) {
+        for (let i = 0; i < UI64_DIGITS; i++)
             x[i] ^= y[i]
     }
 
@@ -409,14 +410,14 @@
         just sufficient enough for the MD5 and SHA1 digests!  */
 
     /*  safely add two integers (with wrapping at 2^32)  */
-    var ui32_add = function (x, y) {
-        var lsw = (x & 0xFFFF) + (y & 0xFFFF)
-        var msw = (x >> 16) + (y >> 16) + (lsw >> 16)
+    const ui32_add = function (x, y) {
+        const lsw = (x & 0xFFFF) + (y & 0xFFFF)
+        const msw = (x >> 16) + (y >> 16) + (lsw >> 16)
         return (msw << 16) | (lsw & 0xFFFF)
     }
 
     /*  bitwise rotate 32-bit number to the left  */
-    var ui32_rol = function (num, cnt) {
+    const ui32_rol = function (num, cnt) {
         return (
             ((num <<        cnt ) & 0xFFFFFFFF) |
             ((num >>> (32 - cnt)) & 0xFFFFFFFF)
@@ -424,7 +425,7 @@
     }
 
     /*  calculate the SHA-1 of an array of big-endian words, and a bit length  */
-    var sha1_core = function (x, len) {
+    const sha1_core = function (x, len) {
         /*  perform the appropriate triplet combination function for the current iteration  */
         function sha1_ft (t, b, c, d) {
             if (t < 20) return (b & c) | ((~b) & d)
@@ -448,25 +449,25 @@
         x[len >> 5] |= 0x80 << (24 - len % 32)
         x[((len + 64 >> 9) << 4) + 15] = len
 
-        var w = Array(80)
-        var a =  1732584193
-        var b =  -271733879
-        var c = -1732584194
-        var d =   271733878
-        var e = -1009589776
+        const w = Array(80)
+        let a =  1732584193
+        let b =  -271733879
+        let c = -1732584194
+        let d =   271733878
+        let e = -1009589776
 
-        for (var i = 0; i < x.length; i += 16) {
-            var olda = a
-            var oldb = b
-            var oldc = c
-            var oldd = d
-            var olde = e
-            for (var j = 0; j < 80; j++) {
+        for (let i = 0; i < x.length; i += 16) {
+            const olda = a
+            const oldb = b
+            const oldc = c
+            const oldd = d
+            const olde = e
+            for (let j = 0; j < 80; j++) {
                 if (j < 16)
                     w[j] = x[i + j]
                 else
                     w[j] = ui32_rol(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1)
-                var t = ui32_add(
+                const t = ui32_add(
                     ui32_add(ui32_rol(a, 5), sha1_ft(j, b, c, d)),
                     ui32_add(ui32_add(e, w[j]), sha1_kt(j))
                 )
@@ -486,7 +487,7 @@
     }
 
     /*  calculate the SHA-1 of an octet string  */
-    var sha1 = function (s) {
+    const sha1 = function (s) {
         return a2s(
             sha1_core(
                 s2a(s, { ibits: 8, obits: 32, obigendian: true }),
@@ -495,7 +496,7 @@
     }
 
     /*  calculate the MD5 of an array of little-endian words, and a bit length  */
-    var md5_core = function (x, len) {
+    const md5_core = function (x, len) {
         /*  basic operations the algorithm uses  */
         function md5_cmn (q, a, b, x, s, t) {
             return ui32_add(ui32_rol(ui32_add(ui32_add(a, q), ui32_add(x, t)), s), b)
@@ -517,16 +518,16 @@
         x[len >> 5] |= 0x80 << ((len) % 32)
         x[(((len + 64) >>> 9) << 4) + 14] = len
 
-        var a =  1732584193
-        var b =  -271733879
-        var c = -1732584194
-        var d =   271733878
+        let a =  1732584193
+        let b =  -271733879
+        let c = -1732584194
+        let d =   271733878
 
-        for (var i = 0; i < x.length; i += 16) {
-            var olda = a
-            var oldb = b
-            var oldc = c
-            var oldd = d
+        for (let i = 0; i < x.length; i += 16) {
+            const olda = a
+            const oldb = b
+            const oldc = c
+            const oldd = d
 
             a = md5_ff(a, b, c, d, x[i+ 0],  7,  -680876936)
             d = md5_ff(d, a, b, c, x[i+ 1], 12,  -389564586)
@@ -605,7 +606,7 @@
     }
 
     /*  calculate the MD5 of an octet string  */
-    var md5 = function (s) {
+    const md5 = function (s) {
         return a2s(
             md5_core(
                 s2a(s, { ibits: 8, obits: 32, obigendian: false }),
@@ -620,7 +621,7 @@
         state = state * MUL + INC
         output = rotate32((state ^ (state >> 18)) >> 27, state >> 59)  */
 
-    var PCG = function (seed) {
+    const PCG = function (seed) {
         /*  pre-load some "magic" constants  */
         this.mul   = ui64_d2i(0x58, 0x51, 0xf4, 0x2d, 0x4c, 0x95, 0x7f, 0x2d)
         this.inc   = ui64_d2i(0x14, 0x05, 0x7b, 0x7e, 0xf7, 0x67, 0x81, 0x4f)
@@ -630,7 +631,7 @@
         this.state = ui64_clone(this.inc)
         this.next()
         ui64_and(this.state, this.mask)
-        var arr
+        let arr
         if (seed !== undefined)
             /*  external seeding  */
             seed = ui64_n2i(seed >>> 0)
@@ -660,26 +661,26 @@
     }
     PCG.prototype.next = function () {
         /*  save current state  */
-        var state = ui64_clone(this.state)
+        const state = ui64_clone(this.state)
 
         /*  advance internal state  */
         ui64_mul(this.state, this.mul)
         ui64_add(this.state, this.inc)
 
         /*  calculate: (state ^ (state >> 18)) >> 27  */
-        var output = ui64_clone(state)
+        const output = ui64_clone(state)
         ui64_ror(output, 18)
         ui64_xor(output, state)
         ui64_ror(output, 27)
 
         /*  calculate: state >> 59  */
-        var rot = ui64_clone(state)
+        const rot = ui64_clone(state)
         ui64_ror(rot, 59)
 
         /*  calculate: rotate32(xorshifted, rot)  */
         ui64_and(output, this.mask)
-        var k = ui64_i2n(rot)
-        var output2 = ui64_clone(output)
+        const k = ui64_i2n(rot)
+        const output2 = ui64_clone(output)
         ui64_rol(output2, 32 - k)
         ui64_ror(output, k)
         ui64_xor(output, output2)
@@ -690,27 +691,27 @@
     PCG.prototype.reseed = function (seed) {
         if (typeof seed !== "string")
             throw new Error("UUID: PCG: seed: invalid argument (string expected)")
-        var arr = sha1_core(s2a(seed, { ibits: 8, obits: 32, obigendian: true }), seed.length * 8)
-        for (var i = 0; i < arr.length; i++)
+        const arr = sha1_core(s2a(seed, { ibits: 8, obits: 32, obigendian: true }), seed.length * 8)
+        for (let i = 0; i < arr.length; i++)
             ui64_xor(pcg.state, ui64_n2i((arr[i] >>> 0)))
     }
-    var pcg = new PCG()
+    const pcg = new PCG()
     PCG.reseed = function (seed) { pcg.reseed(seed) }
 
     /*  utility function: simple Pseudo Random Number Generator (PRNG)  */
-    var prng = function (len, radix) {
-        var bytes = []
-        for (var i = 0; i < len; i++)
+    const prng = function (len, radix) {
+        const bytes = []
+        for (let i = 0; i < len; i++)
             bytes[i] = (pcg.next() % radix)
         return bytes
     }
 
     /*  internal state  */
-    var time_last = 0
-    var time_seq  = 0
+    let time_last = 0
+    let time_seq  = 0
 
     /*  the API constructor  */
-    var UUID = function () {
+    const UUID = function () {
         if (arguments.length === 1 && typeof arguments[0] === "string")
             this.parse.apply(this, arguments)
         else if (arguments.length >= 1 && typeof arguments[0] === "number")
@@ -718,7 +719,7 @@
         else if (arguments.length >= 1)
             throw new Error("UUID: constructor: invalid arguments")
         else
-            for (var i = 0; i < 16; i++)
+            for (let i = 0; i < 16; i++)
                 this[i] = 0x00
     }
 
@@ -739,14 +740,14 @@
 
     /*  API method: generate a particular UUID  */
     UUID.prototype.make = function (version) {
-        var i
-        var uuid = this
+        let i
+        const uuid = this
         if (version === 1) {
             /*  generate UUID version 1 (time and node based)  */
 
             /*  determine current time and time sequence counter  */
-            var date = new Date()
-            var time_now = date.getTime()
+            const date = new Date()
+            const time_now = date.getTime()
             if (time_now !== time_last)
                 time_seq = 0
             else
@@ -754,7 +755,7 @@
             time_last = time_now
 
             /*  convert time to 100*nsec  */
-            var t = ui64_n2i(time_now)
+            const t = ui64_n2i(time_now)
             ui64_muln(t, 1000 * 10)
 
             /*  adjust for offset between UUID and Unix Epoch time  */
@@ -766,7 +767,7 @@
                 ui64_add(t, ui64_n2i(time_seq))
 
             /*  store the 60 LSB of the time in the UUID  */
-            var ov
+            let ov
             ov = ui64_rorn(t, 8); uuid[3] = (ov & 0xFF)
             ov = ui64_rorn(t, 8); uuid[2] = (ov & 0xFF)
             ov = ui64_rorn(t, 8); uuid[1] = (ov & 0xFF)
@@ -777,12 +778,12 @@
             ov = ui64_rorn(t, 8); uuid[6] = (ov & 0x0F)
 
             /*  generate a random clock sequence  */
-            var clock = prng(2, 255)
+            const clock = prng(2, 255)
             uuid[8] = clock[0]
             uuid[9] = clock[1]
 
             /*  generate a random local multicast node address  */
-            var node = prng(6, 255)
+            const node = prng(6, 255)
             node[0] |= 0x01
             node[0] |= 0x02
             for (i = 0; i < 6; i++)
@@ -790,21 +791,21 @@
         }
         else if (version === 4) {
             /*  generate UUID version 4 (random data based)  */
-            var data = prng(16, 255)
+            const data = prng(16, 255)
             for (i = 0; i < 16; i++)
                 this[i] = data[i]
         }
         else if (version === 3 || version === 5) {
             /*  generate UUID version 3/5 (MD5/SHA-1 based)  */
-            var input = ""
-            var nsUUID = (
+            let input = ""
+            const nsUUID = (
                 typeof arguments[1] === "object" && arguments[1] instanceof UUID ?
                     arguments[1] : new UUID().parse(arguments[1])
             )
             for (i = 0; i < 16; i++)
                 input += String.fromCharCode(nsUUID[i])
             input += arguments[2]
-            var s = version === 3 ? md5(input) : sha1(input)
+            const s = version === 3 ? md5(input) : sha1(input)
             for (i = 0; i < 16; i++)
                 uuid[i] = s.charCodeAt(i)
         }
@@ -824,7 +825,7 @@
 
     /*  API method: format UUID into usual textual representation  */
     UUID.prototype.format = function (type) {
-        var str, arr
+        let str, arr
         if (type === "z85")
             str = z85_encode(this, 16)
         else if (type === "b16") {
@@ -863,7 +864,7 @@
         else if (type === "b16")
             hs2a(str, 0, 35, this, 0)
         else if (type === undefined || type === "std") {
-            var map = {
+            const map = {
                 "nil":     "00000000-0000-0000-0000-000000000000",
                 "ns:DNS":  "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
                 "ns:URL":  "6ba7b811-9dad-11d1-80b4-00c04fd430c8",
@@ -886,8 +887,8 @@
 
     /*  API method: export UUID into standard array of numbers  */
     UUID.prototype.export = function () {
-        var arr = Array(16)
-        for (var i = 0; i < 16; i++)
+        const arr = Array(16)
+        for (let i = 0; i < 16; i++)
             arr[i] = this[i]
         return arr
     }
@@ -898,7 +899,7 @@
             throw new Error("UUID: import: invalid argument (type Array expected)")
         if (arr.length !== 16)
             throw new Error("UUID: import: invalid argument (Array of length 16 expected)")
-        for (var i = 0; i < 16; i++) {
+        for (let i = 0; i < 16; i++) {
             if (typeof arr[i] !== "number")
                 throw new Error("UUID: import: invalid array element #" + i +
                     " (type Number expected)")
@@ -919,7 +920,7 @@
             throw new Error("UUID: compare: invalid argument (type UUID expected)")
         if (!(other instanceof UUID))
             throw new Error("UUID: compare: invalid argument (type UUID expected)")
-        for (var i = 0; i < 16; i++) {
+        for (let i = 0; i < 16; i++) {
             if (this[i] < other[i])
                 return -1
             else if (this[i] > other[i])
@@ -939,11 +940,11 @@
             throw new Error("UUID: fold: invalid argument (number of fold operations expected)")
         if (k < 1 || k > 4)
             throw new Error("UUID: fold: invalid argument (1-4 fold operations expected)")
-        var n = 16 / Math.pow(2, k)
-        var hash = new Array(n)
-        for (var i = 0; i < n; i++) {
-            var h = 0
-            for (var j = 0; i + j < 16; j += n)
+        const n = 16 / Math.pow(2, k)
+        const hash = new Array(n)
+        for (let i = 0; i < n; i++) {
+            let h = 0
+            for (let j = 0; i + j < 16; j += n)
                 h ^= this[i + j]
             hash[i] = h
         }
