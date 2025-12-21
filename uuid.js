@@ -784,8 +784,7 @@
 
             /*  generate a random local multicast node address  */
             const node = prng(6, 255)
-            node[0] |= 0x01
-            node[0] |= 0x02
+            node[0] |= 0x03
             for (i = 0; i < 6; i++)
                 uuid[10 + i] = node[i]
         }
