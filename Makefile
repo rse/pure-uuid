@@ -23,12 +23,12 @@
 ##
 
 NPM   = npm
-GRUNT = ./node_modules/grunt-cli/bin/grunt
+GRUNT = npx grunt
 
 all: build
 
 bootstrap:
-	@if [ ! -x $(GRUNT) ]; then $(NPM) install; fi
+	@if [ ! -d node_modules ]; then $(NPM) install; fi
 
 build: bootstrap
 	@$(GRUNT)
