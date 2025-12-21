@@ -202,7 +202,7 @@
     }
 
     /*  this is just a really minimal UI64 functionality,
-        just sufficient enough for the UUID v1 generator and PCG PRNG!  */
+        just sufficient for the UUID v1 generator and PCG PRNG!  */
 
     /*  UI64 constants  */
     const UI64_DIGITS     = 8    /* number of digits */
@@ -407,7 +407,7 @@
     }
 
     /*  this is just a really minimal UI32 functionality,
-        just sufficient enough for the MD5 and SHA1 digests!  */
+        just sufficient for the MD5 and SHA1 digests!  */
 
     /*  safely add two integers (with wrapping at 2^32)  */
     const ui32_add = function (x, y) {
