@@ -63,9 +63,9 @@
 
     const z85_encoder = (
         "0123456789" +
-         "abcdefghijklmnopqrstuvwxyz" +
-         "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-         ".-:+=^!/*?&<>()[]{}@%$#"
+        "abcdefghijklmnopqrstuvwxyz" +
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+        ".-:+=^!/*?&<>()[]{}@%$#"
     ).split("")
     const z85_decoder = [
         0x00, 0x44, 0x00, 0x54, 0x53, 0x52, 0x48, 0x00,
@@ -180,17 +180,17 @@
             if (typeof options[opt] !== "undefined")
                 options[opt] = _options[opt]
 
-        /* convert array to string */
+        /*  convert array to string  */
         let s = ""
         let imask = 0xFFFFFFFF
         if (options.ibits < 32)
             imask = (1 << options.ibits) - 1
         const al = a.length
         for (let i = 0; i < al; i++) {
-            /* fetch next word from array */
+            /*  fetch next word from array  */
             const w = a[i] & imask
 
-            /* place next octet into string */
+            /*  place next octet into string  */
             for (let j = 0; j < options.ibits; j += 8) {
                 if (options.ibigendian)
                     s += String.fromCharCode((w >> ((options.ibits - 8) - j)) & 0xFF)
@@ -466,7 +466,7 @@
                 if (j < 16)
                     w[j] = x[i + j]
                 else
-                    w[j] = ui32_rol(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1)
+                    w[j] = ui32_rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1)
                 const t = ui32_add(
                     ui32_add(ui32_rol(a, 5), sha1_ft(j, b, c, d)),
                     ui32_add(ui32_add(e, w[j]), sha1_kt(j))
@@ -754,7 +754,7 @@
                 time_seq++
             time_last = time_now
 
-            /*  convert time to 100*nsec  */
+            /*  convert time to 100 x nano-sec  */
             const t = ui64_n2i(time_now)
             ui64_muln(t, 1000 * 10)
 
@@ -842,6 +842,8 @@
             a2hs(this, 10, 15, false, arr, 24)
             str = arr.join("")
         }
+        else
+            throw new Error("UUID: format: invalid type argument")
         return str
     }
 
