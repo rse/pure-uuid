@@ -449,7 +449,7 @@
         x[len >> 5] |= 0x80 << (24 - len % 32)
         x[((len + 64 >> 9) << 4) + 15] = len
 
-        const w = Array(80)
+        const w = new Array(80)
         let a =  1732584193
         let b =  -271733879
         let c = -1732584194
@@ -829,7 +829,7 @@
         if (type === "z85")
             str = z85_encode(this, 16)
         else if (type === "b16") {
-            arr = Array(32)
+            arr = new Array(32)
             a2hs(this, 0, 15, true, arr, 0)
             str = arr.join("")
         }
@@ -889,7 +889,7 @@
 
     /*  API method: export UUID into standard array of numbers  */
     UUID.prototype.export = function () {
-        const arr = Array(16)
+        const arr = new Array(16)
         for (let i = 0; i < 16; i++)
             arr[i] = this[i]
         return arr
