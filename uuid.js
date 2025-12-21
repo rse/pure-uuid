@@ -730,7 +730,7 @@
         /*  HTML5 TypedArray (browser environments: IE10, FF, CH, SF, OP)
             (http://caniuse.com/#feat=typedarrays)  */
         UUID.prototype = new Uint8Array(16)
-    else if (Buffer)
+    else if (typeof Buffer !== "undefined")
         /*  Node Buffer (server environments: Node.js, IO.js)  */
         UUID.prototype = Buffer.alloc(16)
     else
