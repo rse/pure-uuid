@@ -297,7 +297,7 @@
         /*  provide result by splitting zx into x and ov  */
         for (i = 0; i < UI64_DIGITS; i++)
             x[i] = zx[i]
-        return zx.slice(UI64_DIGITS, UI64_DIGITS)
+        return zx.slice(UI64_DIGITS, UI64_DIGITS + UI64_DIGITS)
     }
 
     /*  AND operation: UI64 (x) &= UI64 (y)  */
@@ -397,7 +397,7 @@
         /*  provide result by splitting zx into x and ov  */
         for (i = 0; i < UI64_DIGITS; i++)
             x[i] = zx[i]
-        return zx.slice(UI64_DIGITS, UI64_DIGITS)
+        return zx.slice(UI64_DIGITS, UI64_DIGITS + UI64_DIGITS)
     }
 
     /*  XOR UI64 (y) onto UI64 (x) and return x  */
