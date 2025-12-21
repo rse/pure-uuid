@@ -22,8 +22,7 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/* jshint -W030: false */
-/* eslint no-unused-expressions: 0 */
+/* eslint no-unused-expressions: off */
 
 global.chai = require("chai")
 global.expect = global.chai.expect
