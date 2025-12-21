@@ -435,7 +435,7 @@
 
         /*  determine the appropriate additive constant for the current iteration  */
         function sha1_kt (t) {
-            /* eslint indent: off */
+            /* eslint @stylistic/indent: off */
             return (
                 (t < 20) ?  1518500249 :
                 (t < 40) ?  1859775393 :
@@ -792,21 +792,21 @@
             /*  generate UUID version 4 (random data based)  */
             var data = prng(16, 255);
             for (i = 0; i < 16; i++)
-                 this[i] = data[i];
+                this[i] = data[i];
         }
         else if (version === 3 || version === 5) {
             /*  generate UUID version 3/5 (MD5/SHA-1 based)  */
             var input = "";
             var nsUUID = (
                 typeof arguments[1] === "object" && arguments[1] instanceof UUID ?
-                arguments[1] : new UUID().parse(arguments[1])
+                    arguments[1] : new UUID().parse(arguments[1])
             );
             for (i = 0; i < 16; i++)
-                 input += String.fromCharCode(nsUUID[i]);
+                input += String.fromCharCode(nsUUID[i]);
             input += arguments[2];
             var s = version === 3 ? md5(input) : sha1(input);
             for (i = 0; i < 16; i++)
-                 uuid[i] = s.charCodeAt(i);
+                uuid[i] = s.charCodeAt(i);
         }
         else
             throw new Error("UUID: make: invalid version");
